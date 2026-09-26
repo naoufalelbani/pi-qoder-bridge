@@ -1,0 +1,6 @@
+{
+  "$comment": "Copy to ~/.pi/agent/settings.json (user level) or .pi/settings.json (project level). See README 'Configuration'.",
+  "packages": ["npm:pi-qoder-bridge"],
+  "defaultProvider": "qoder",
+  "defaultModel": "auto"
+}
