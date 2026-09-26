@@ -12,6 +12,9 @@ name: Publish to npm
 on:
   release:
     types: [published]
+  # Manual re-run (e.g. first publish via token before the trusted
+  # publisher is configured, or retrying a failed release publish).
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -55,5 +58,18 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Publish to npm (OIDC trusted publishing + provenance)
-        run: npm publish --provenance --access public
+      - name: Publish to npm
+        # Two OTP-free paths, token first:
+        # 1. NPM_TOKEN repo secret (automation token): works immediately,
+        #    including the very first publish. No trusted publisher needed.
+        # 2. Otherwise OIDC trusted publishing + provenance (requires the
+        #    one-time npmjs.com package Settings > Trusted Publisher setup).
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          if [ -n "${NPM_TOKEN:-}" ]; then
+            npm config set //registry.npmjs.org/:_authToken "$NPM_TOKEN"
+            npm publish --access public
+          else
+            npm publish --provenance --access public
+          fi

@@ -27,13 +27,19 @@ State is isolated: pi defaults to `~/.config/pi-qoder-bridge`
 
 Publishing is automated: creating (or publishing) a GitHub release runs
 `.github/workflows/publish.yml`, which checks the tag out, verifies the tag
-matches `package.json`, runs `typecheck` + `build`, and publishes with OIDC
-trusted publishing + provenance. No local `npm login` needed.
+matches `package.json`, runs `typecheck` + `build`, and publishes with no OTP
+involved. Auth, in order:
 
-One-time setup: after the first manual publish, open the package on npmjs.com
-→ Settings → Trusted Publisher, and add GitHub Actions for
-`naoufalelbani/pi-qoder-bridge`, workflow file `publish.yml` (no
-environment). Every later release then publishes itself.
+1. `NPM_TOKEN` repo secret (automation token — works immediately, including
+   the first publish; create at npmjs.com → Access Tokens → Generate New
+   Token → Automation, then `gh secret set NPM_TOKEN` and paste it).
+2. Otherwise OIDC trusted publishing + provenance (one-time npmjs.com package
+   Settings > Trusted Publisher setup for `naoufalelbani/pi-qoder-bridge`,
+   workflow `publish.yml`, no environment).
+
+The workflow also has a manual `workflow_dispatch` trigger for re-running a
+publish (first publish via token, or retrying a failed release publish)
+without cutting a new release.
 
 Release flow:
 
