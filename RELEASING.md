@@ -37,9 +37,11 @@ involved. Auth, in order:
    Settings > Trusted Publisher setup for `naoufalelbani/pi-qoder-bridge`,
    workflow `publish.yml`, no environment).
 
-The workflow also has a manual `workflow_dispatch` trigger for re-running a
-publish (first publish via token, or retrying a failed release publish)
-without cutting a new release.
+The workflow also has a manual `workflow_dispatch` trigger (takes the tag as
+required input) for re-running a publish — first publish via token, or
+retrying a failed release publish — without cutting a new release.
+Prereleases publish under the `next` dist-tag so `latest` stays stable;
+concurrent runs are serialized via a concurrency group.
 
 Release flow:
 
