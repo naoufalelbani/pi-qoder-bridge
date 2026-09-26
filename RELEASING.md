@@ -25,13 +25,34 @@ State is isolated: pi defaults to `~/.config/pi-qoder-bridge`
 
 ## Release gate
 
+Publishing is automated: creating (or publishing) a GitHub release runs
+`.github/workflows/publish.yml`, which checks the tag out, verifies the tag
+matches `package.json`, runs `typecheck` + `build`, and publishes with OIDC
+trusted publishing + provenance. No local `npm login` needed.
+
+One-time setup: after the first manual publish, open the package on npmjs.com
+→ Settings → Trusted Publisher, and add GitHub Actions for
+`naoufalelbani/pi-qoder-bridge`, workflow file `publish.yml` (no
+environment). Every later release then publishes itself.
+
+Release flow:
+
 ```bash
+# 1. lockstep bump in both repos + changelogs (same version)
+# 2. verify locally
 npm install
 npm run typecheck
 npm run build
 npm pack --dry-run
 # verify dist/ + README + CHANGELOG + LICENSE in tarball
-npm publish --access public
+# 3. commit, tag, push
+git commit -m "release: vX.Y.Z"
+git tag -a vX.Y.Z -m "pi-qoder-bridge vX.Y.Z"
+git push origin main vX.Y.Z
+# 4. create the GitHub release (triggers the publish workflow)
+gh release create vX.Y.Z --title "vX.Y.Z" --notes "..."
+# 5. watch it: gh run watch, then:
+npm view pi-qoder-bridge
 ```
 
 Then release `opencode-qoder-bridge` at the same version (see its

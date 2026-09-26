@@ -1,0 +1,59 @@
+# Release automation: publishing `pi-qoder-bridge` to npm happens here, not on
+# a maintainer laptop. Creating (or publishing) a GitHub release runs the
+# release job, which verifies, builds, and publishes with OIDC trusted
+# publishing — no long-lived npm tokens anywhere.
+#
+# One-time npm setup (package Settings > Trusted Publisher, after the first
+# manual publish): GitHub Actions, org/user `naoufalelbani`, repository
+# `pi-qoder-bridge`, workflow file `publish.yml`, environment left empty.
+# Afterwards every GitHub release publishes itself; see RELEASING.md.
+name: Publish to npm
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out release tag
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.release.tag_name }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+
+      - name: Guard tag/version alignment
+        run: |
+          node -e "
+            const fs = require('fs');
+            const tag = process.env.GITHUB_REF_NAME || '';
+            const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+            const expected = tag.startsWith('v') ? tag.slice(1) : tag;
+            if (pkg.version !== expected) {
+              console.error(\`Tag \${tag} does not match package.json version \${pkg.version}; refusing to publish.\`);
+              process.exit(1);
+            }
+            console.log(\`Release \${tag} matches package version \${pkg.version}.\`);
+          "
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Build
+        run: npm run build
+
+      - name: Publish to npm (OIDC trusted publishing + provenance)
+        run: npm publish --provenance --access public
