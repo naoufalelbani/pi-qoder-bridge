@@ -1,6 +1,6 @@
 # pi-qoder-bridge
 
-Qoder provider extension for [pi.dev](https://pi.dev) (`pi` coding agent), powered by the official [`@qoder-ai/qoder-agent-sdk`](https://www.npmjs.com/package/@qoder-ai/qoder-agent-sdk).
+Qoder provider extension for [pi.dev](https://pi.dev) (`pi` coding agent), supporting Qoder international and CN regions through the official [`@qoder-ai/qoder-agent-sdk`](https://www.npmjs.com/package/@qoder-ai/qoder-agent-sdk).
 
 Port of [`opencode-qoder-bridge`](https://www.npmjs.com/package/opencode-qoder-bridge) concepts to pi's `ExtensionAPI`:
 
@@ -41,8 +41,19 @@ pi -e ./dist/index.js
 
 ## Install as pi package
 
-> Until the first `npm publish`, the package is **not** on the npm registry —
-> use the local-checkout flow below, not `packages: ["npm:pi-qoder-bridge"]`.
+The package is published on npm. Install it with:
+
+```bash
+pi install npm:pi-qoder-bridge
+```
+
+Or add it to `~/.pi/agent/settings.json`:
+
+```json
+{ "packages": ["npm:pi-qoder-bridge"] }
+```
+
+For a local checkout, build and load the extension directly:
 
 ```bash
 # from a clone of this repo:
@@ -58,18 +69,6 @@ array in `~/.pi/agent/settings.json` (user level) instead of `packages`:
 {
   "extensions": ["/absolute/path/to/pi-qoder-bridge/dist/index.js"]
 }
-```
-
-Once published:
-
-```bash
-# local link test (mirrors pi publishing guide):
-npm link
-pi install link:pi-qoder-bridge
-
-# or npm:
-npm publish
-pi install npm:pi-qoder-bridge
 ```
 
 `package.json` uses the `pi.extensions` manifest pointing at compiled JS:

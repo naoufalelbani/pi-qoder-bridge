@@ -9,6 +9,19 @@ numbers and release together. `0.2.0` is the first aligned release. The pi
 package intentionally stays provider + usage only (no cost ledger, sessions,
 MCP bridging, or TUI sidebar).
 
+## [0.3.0] - 2026-10-12
+
+### Changed
+
+- Updated the Qoder Agent SDK to 1.0.51 in lockstep with the OpenCode bridge
+  and approved its install script for the bundled Worker runtime. Pinned the
+  patched MCP SDK dependency. Updated the login hint to include Pi's
+  `/login qoder` flow.
+
+### Validation
+
+- Typecheck, build, and package dry run completed for the `0.3.0` release.
+
 ## [0.2.0] - 2026-09-26
 
 First public release. Lockstep-aligned with `opencode-qoder-bridge@0.2.0`.
