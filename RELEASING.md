@@ -8,7 +8,7 @@ only.
 ## Sync contract (port every change in these areas)
 
 1. `@qoder-ai/qoder-agent-sdk` version — identical in both repos (currently
-   pinned `1.0.50`, no caret).
+   pinned `1.0.51`, no caret).
 2. `auth`: PAT env, `.qoderwork` / `.qoder` / `.qoder-cn` login files,
    region-aware hint wording.
 3. `models`: fallback `lite` / `auto` / `performance` defs, unsafe-id and

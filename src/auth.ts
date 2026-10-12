@@ -58,5 +58,5 @@ export function qoderAuth(env: NodeJS.ProcessEnv = process.env): AuthOptions {
 export function cliLoginHint(env: NodeJS.ProcessEnv = process.env): string {
   const region = env[QODER_REGION_ENV]?.trim().toLowerCase();
   if (region === "cn") return "Run the CN CLI login or set QODER_PERSONAL_ACCESS_TOKEN.";
-  return "Run `qoder login` (CN region: the CN CLI login) or set QODER_PERSONAL_ACCESS_TOKEN.";
+  return "Run `qoder login`, then `/login qoder`, or set QODER_PERSONAL_ACCESS_TOKEN.";
 }
