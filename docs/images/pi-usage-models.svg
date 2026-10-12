@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 290" role="img" aria-labelledby="title desc">
+  <title id="title">Qoder models and usage in Pi</title>
+  <desc id="desc">Pi offers immediate fallback models, refreshes and caches the live Qoder catalog, and provides slash commands for quota and model details.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#111827"/><stop offset="1" stop-color="#0f2c38"/></linearGradient>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#6ee7b7"/></marker>
+    <style>
+      .title{font:700 22px system-ui,-apple-system,Segoe UI,sans-serif;fill:#f8fafc}
+      .label{font:650 16px system-ui,-apple-system,Segoe UI,sans-serif;fill:#f8fafc}
+      .copy{font:13px system-ui,-apple-system,Segoe UI,sans-serif;fill:#cbd5e1}
+      .tag{font:12px system-ui,-apple-system,Segoe UI,sans-serif;fill:#a7f3d0}
+    </style>
+  </defs>
+  <rect width="1120" height="290" rx="24" fill="url(#background)"/>
+  <text x="36" y="44" class="title">Models and account usage, ready in Pi</text>
+  <g transform="translate(36 70)">
+    <rect width="286" height="74" rx="15" fill="#1e293b" stroke="#60a5fa"/>
+    <text x="18" y="30" class="label">Built-in fallbacks</text>
+    <text x="18" y="54" class="copy">lite · auto · performance</text>
+  </g>
+  <g transform="translate(36 164)">
+    <rect width="286" height="74" rx="15" fill="#1e293b" stroke="#a78bfa"/>
+    <text x="18" y="30" class="label">Live Qoder catalog</text>
+    <text x="18" y="54" class="copy">refresh · aliases · local cache</text>
+  </g>
+  <path d="M322 107H374V145H399" fill="none" stroke="#93c5fd" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <path d="M322 201H374V163H399" fill="none" stroke="#c4b5fd" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <g transform="translate(407 112)">
+    <rect width="250" height="86" rx="16" fill="#064e3b" stroke="#34d399"/>
+    <text x="125" y="34" class="label" text-anchor="middle">Pi model picker</text>
+    <text x="125" y="59" class="copy" text-anchor="middle">select qoder/auto or a live model</text>
+  </g>
+  <path d="M657 155H715" fill="none" stroke="#6ee7b7" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <g transform="translate(733 85)">
+    <rect width="350" height="66" rx="14" fill="#1e293b" stroke="#fbbf24"/>
+    <text x="18" y="28" class="label">/qoder_usage</text>
+    <text x="18" y="49" class="copy">live account quota · cached 60s</text>
+  </g>
+  <g transform="translate(733 165)">
+    <rect width="350" height="66" rx="14" fill="#1e293b" stroke="#38bdf8"/>
+    <text x="18" y="28" class="label">/qoder_models</text>
+    <text x="18" y="49" class="copy">model names · capabilities · aliases</text>
+  </g>
+  <text x="36" y="270" class="tag">If live discovery is unavailable, cached models and built-in fallbacks remain available.</text>
+</svg>

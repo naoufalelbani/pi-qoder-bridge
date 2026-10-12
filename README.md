@@ -1,6 +1,26 @@
 # pi-qoder-bridge
 
-Qoder provider extension for [pi.dev](https://pi.dev) (`pi` coding agent), supporting Qoder international and CN regions through the official [`@qoder-ai/qoder-agent-sdk`](https://www.npmjs.com/package/@qoder-ai/qoder-agent-sdk).
+[![Publish to npm](https://github.com/naoufalelbani/pi-qoder-bridge/actions/workflows/publish.yml/badge.svg)](https://github.com/naoufalelbani/pi-qoder-bridge/actions/workflows/publish.yml)
+[![npm version](https://img.shields.io/npm/v/pi-qoder-bridge?logo=npm)](https://www.npmjs.com/package/pi-qoder-bridge)
+[![npm downloads](https://img.shields.io/npm/dm/pi-qoder-bridge?logo=npm)](https://www.npmjs.com/package/pi-qoder-bridge)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
+[![Node.js](https://img.shields.io/badge/node-%3E%3D22.22.2-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
+[![Qoder regions](https://img.shields.io/badge/Qoder-International%20%2B%20CN-2563eb)](https://qoder.com/)
+
+Run Qoder models in [pi](https://pi.dev), the coding agent, with the official
+[`@qoder-ai/qoder-agent-sdk`](https://www.npmjs.com/package/@qoder-ai/qoder-agent-sdk).
+Stream text and thinking, discover models, check live quota, and use Qoder
+international or CN accounts through the same extension.
+
+**Pi Extension · Official SDK · International + CN · Streaming · Live quota**
+
+[Quick start](#quick-start) · [Highlights](#highlights) · [Authentication](#authentication) · [Configuration](#configuration)
+
+![Pi Qoder Bridge architecture](./docs/images/pi-architecture.svg)
+
+Pi owns the conversation and model selection. This extension connects Pi to the
+official Qoder SDK for model discovery, streamed responses, account usage, and
+the Qoder runtime's agent actions.
 
 Port of [`opencode-qoder-bridge`](https://www.npmjs.com/package/opencode-qoder-bridge) concepts to pi's `ExtensionAPI`:
 
@@ -10,30 +30,57 @@ Port of [`opencode-qoder-bridge`](https://www.npmjs.com/package/opencode-qoder-b
 | AI SDK v3 `languageModel` streaming | pi-ai `streamSimple` via `createAssistantMessageEventStream` |
 | `tool()` + TUI slash commands | `pi.registerTool()` + `pi.registerCommand()` |
 | `getAvailableModels()` live discovery (10s) + cache + `lite/auto/performance` fallbacks | pi-native `refreshModels` + provider-scoped store + same fallbacks (in `src/models.ts`) |
-| local cost ledger + `getUsageInfo()` | v1: live `getUsageInfo()` only (cached 60s) |
+| local cost ledger + `getUsageInfo()` | live `getUsageInfo()` only (cached 60s) |
 
-> Independent community project. Not affiliated with Qoder or pi. Qoder usage subject to [Qoder Product Service Terms](https://qoder.com/product-service).
+> [!IMPORTANT]
+> This is an independent community project. It is not affiliated with,
+> endorsed by, or sponsored by Qoder or pi. Qoder usage is subject to the
+> [Qoder Product Service Terms](https://qoder.com/product-service).
 
 > Separate repo, lockstep versions with [`opencode-qoder-bridge`](https://www.npmjs.com/package/opencode-qoder-bridge).
 > Both packages share version numbers and release together (aligned from `0.2.0`).
 > The pi package intentionally stays provider + usage only.
 
+## What's new in v0.3.0
+
+Version 0.3.0 updates the Qoder Agent SDK to 1.0.51 in lockstep with the
+OpenCode bridge, pins the patched MCP SDK dependency, and clarifies Pi's
+`/login qoder` flow. Qoder international and CN region support are available
+through the official SDK's CLI authentication, alongside personal access
+tokens.
+
+![Qoder international, CN, and personal token authentication in Pi](./docs/images/pi-authentication.svg)
+
+## Highlights
+
+- **One provider for international and CN accounts** — reuse the matching
+  Qoder CLI login, or set a personal access token.
+- **Official Qoder runtime** — requests use `@qoder-ai/qoder-agent-sdk`.
+- **Live responses** — stream text and thinking while Qoder runs its agent
+  tools.
+- **Useful commands** — `/qoder_usage` shows account quota and
+  `/qoder_models` shows discovered models and their Pi-friendly aliases.
+- **Fast model selection** — built-in `lite`, `auto`, and `performance`
+  models are available immediately while live catalog discovery runs.
+- **Resilient catalog** — live models are cached for later sessions and fall
+  back to the built-in catalog when discovery is unavailable.
+
+![Live quota, model discovery, and cached fallback models in Pi](./docs/images/pi-usage-models.svg)
+
 ## Quick start
 
-Requirements: Node 22.22.2+ or 24.15.0+, `pi` installed, Qoder auth.
+Requirements: Node.js 22.22.2+ or 24.15.0+, Pi 0.83.0+, and a Qoder account.
 
 ```bash
-export QODER_PERSONAL_ACCESS_TOKEN="pt-..."
-# or: qoder login  (CN region: CN-CLI login)
+pi install npm:pi-qoder-bridge
 
-cd pi-qoder-bridge
-npm install
-npm run build
-
-# quick test without installing:
-pi -e ./dist/index.js
+# Choose one authentication method:
+qoder login                 # Qoder international account
+# Or sign in with the CN CLI for a Qoder CN account.
+# Or export QODER_PERSONAL_ACCESS_TOKEN="pt-..."
 
 # inside pi:
+/login qoder
 /model          # select qoder/auto
 /qoder_usage
 /qoder_models
@@ -137,7 +184,7 @@ restored sessions), never shadow fallback ids or raw SDK values, and are
 shown with their mapping in `/qoder_models`. Built-ins keep their ids, so
 `defaultModel: auto` keeps working.
 
-## What v1 does / doesn't do
+## What this extension does / doesn't do
 
 - Does: provider registration, token-streamed text/thinking, `/qoder_usage`, `/qoder_models`, PAT + `qoder login` / CN login auth (via SDK `qodercliAuth()`), live catalog via `refreshModels` with persisted + built-in fallbacks.
 - Tool execution model: the Qoder runtime runs its own tools (Bash/Read/Edit/…) inside its process. Its tool calls are recorded in the transcript as text (`[Qoder tool call: …]`) and are never forwarded as pi tool calls — forwarding them would execute every side effect twice. `/model` open triggers a catalog refresh; background warm + file cache keep listings instant.
@@ -153,7 +200,7 @@ shown with their mapping in `/qoder_models`. Built-ins keep their ids, so
 
 Kept in sync on every lockstep release: SDK range, auth (PAT + `.qoderwork`/`.qoder`/`.qoder-cn` + region-aware hint), model fallbacks + filtering + 10s discovery, usage cache + hint wording, Node engines. See `RELEASING.md`.
 
-## Auth
+## Authentication
 
 - `QODER_PERSONAL_ACCESS_TOKEN` (recommended, uses SDK Worker runtime)
 - or `qoder login` → `~/.qoder/.auth/user` (also `.qoderwork`), CN-CLI → `~/.qoder-cn/.auth/user`
@@ -171,8 +218,7 @@ is configured. Check in order:
 
 1. **Extension loaded?** `pi list` shows installed extensions. Startup errors
    surface in the TUI — with a local checkout, make sure you built first
-   (`npm run build`) and load it (`pi -e ./dist/index.js`). Note the npm
-   package must be published before `packages: ["npm:pi-qoder-bridge"]` works.
+   (`npm run build`) and load it (`pi -e ./dist/index.js`).
 2. **Auth configured?** Either set `QODER_PERSONAL_ACCESS_TOKEN`, or run
    `/login qoder` inside pi (works with `qoder` / CN-CLI login — the bridge
    verifies your CLI session and stores a marker; request auth always happens

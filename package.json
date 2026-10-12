@@ -31,7 +31,8 @@
     "dist",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "docs/images"
   ],
   "pi": {
     "extensions": [

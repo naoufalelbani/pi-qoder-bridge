@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 310" role="img" aria-labelledby="title desc">
+  <title id="title">Qoder authentication options for Pi</title>
+  <desc id="desc">Qoder international CLI login, Qoder CN CLI login, or a personal access token can authenticate the Pi Qoder extension through the official Qoder SDK.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#111827"/><stop offset="1" stop-color="#172554"/></linearGradient>
+    <linearGradient id="bridge" x1="0" x2="1"><stop stop-color="#4338ca"/><stop offset="1" stop-color="#2563eb"/></linearGradient>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#93c5fd"/></marker>
+    <style>
+      .title{font:700 22px system-ui,-apple-system,Segoe UI,sans-serif;fill:#f8fafc}
+      .label{font:650 15px system-ui,-apple-system,Segoe UI,sans-serif;fill:#f8fafc}
+      .copy{font:13px system-ui,-apple-system,Segoe UI,sans-serif;fill:#cbd5e1}
+      .tag{font:12px system-ui,-apple-system,Segoe UI,sans-serif;fill:#bfdbfe}
+    </style>
+  </defs>
+  <rect width="1120" height="310" rx="24" fill="url(#background)"/>
+  <text x="36" y="44" class="title">Use your Qoder account in Pi</text>
+  <g transform="translate(36 66)">
+    <rect width="294" height="58" rx="14" fill="#1e293b" stroke="#60a5fa"/>
+    <text x="18" y="24" class="label">International CLI</text>
+    <text x="18" y="45" class="copy">qoder login · ~/.qoder</text>
+  </g>
+  <g transform="translate(36 136)">
+    <rect width="294" height="58" rx="14" fill="#1e293b" stroke="#a78bfa"/>
+    <text x="18" y="24" class="label">CN CLI</text>
+    <text x="18" y="45" class="copy">CN CLI login · ~/.qoder-cn</text>
+  </g>
+  <g transform="translate(36 206)">
+    <rect width="294" height="58" rx="14" fill="#1e293b" stroke="#fbbf24"/>
+    <text x="18" y="24" class="label">Personal access token</text>
+    <text x="18" y="45" class="copy">QODER_PERSONAL_ACCESS_TOKEN</text>
+  </g>
+  <path d="M330 95H390V152H424" fill="none" stroke="#93c5fd" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <path d="M330 165H424" fill="none" stroke="#c4b5fd" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <path d="M330 235H390V178H424" fill="none" stroke="#fcd34d" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <g transform="translate(432 115)">
+    <rect width="270" height="88" rx="16" fill="url(#bridge)" stroke="#93c5fd"/>
+    <text x="135" y="36" class="label" text-anchor="middle">Pi Qoder provider</text>
+    <text x="135" y="62" class="tag" text-anchor="middle">/login qoder · credential check</text>
+  </g>
+  <path d="M702 159H765" fill="none" stroke="#93c5fd" stroke-width="3" marker-end="url(#arrow)"/>
+  <g transform="translate(782 115)">
+    <rect width="302" height="88" rx="16" fill="#064e3b" stroke="#34d399"/>
+    <text x="151" y="36" class="label" text-anchor="middle">Official Qoder Agent SDK</text>
+    <text x="151" y="62" class="copy" text-anchor="middle">SDK handles request authentication</text>
+  </g>
+  <text x="36" y="290" class="tag">The Pi login flow checks your credential; the extension delegates Qoder requests to the SDK.</text>
+</svg>
