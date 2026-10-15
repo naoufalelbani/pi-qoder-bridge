@@ -9,6 +9,12 @@ numbers and release together. `0.2.0` is the first aligned release. The pi
 package intentionally stays provider + usage only (no cost ledger, sessions,
 MCP bridging, or TUI sidebar).
 
+## [0.4.0] - 2026-10-15
+
+Lockstep release aligned with `opencode-qoder-bridge@0.4.0`. This release
+keeps the Pi package provider + usage only; the 0.4.0 feature additions are
+specific to the OpenCode host integration.
+
 ## [0.3.0] - 2026-10-12
 
 ### Changed

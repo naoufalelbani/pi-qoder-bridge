@@ -1,6 +1,6 @@
 {
   "name": "pi-qoder-bridge",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Qoder provider extension for pi.dev with support for Qoder international and CN regions, powered by the official Qoder Agent SDK.",
   "keywords": [
     "pi",
